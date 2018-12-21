@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-            <v-flex xs12>
+            <v-flex xs12 md6 lg6>
                 <v-card>
                     <v-img :src="programmerSrc" aspect-ratio="2.75"></v-img>
 
@@ -13,12 +13,12 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 hidden-md-and-up>
                 <div class="text-xs-center">
                     <v-chip v-for="skill in profileValue.skills" color="secondary" text-color="white" :key="skill">{{skill}}</v-chip>
                 </div>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 md6 lg6>
                 <v-list two-line>
                     <v-list-tile>
                         <v-list-tile-action>
@@ -68,6 +68,11 @@
                         </v-list-tile-content>
                     </v-list-tile>
                 </v-list>
+            </v-flex>
+            <v-flex lg12 hidden-sm-and-down>
+                <div class="text-xs-center">
+                    <v-chip v-for="skill in profileValue.skills" color="secondary" text-color="white" :key="skill">{{skill}}</v-chip>
+                </div>
             </v-flex>
         </v-layout>
     </v-container>
