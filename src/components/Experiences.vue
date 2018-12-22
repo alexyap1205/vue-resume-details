@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-            <v-flex xs12>
+            <v-flex md12 hidden-sm-and-down>
                 <v-timeline>
                     <v-timeline-item
                             v-for="(experience, i) in experiencesValue"
@@ -24,6 +24,49 @@
                     </v-timeline-item>
                 </v-timeline>
             </v-flex>
+            <v-flex xs12 hidden-md-and-up>
+                <v-window v-model="onboarding">
+                    <v-window-item
+                            v-for="(experience, n) in experiencesValue"
+                            :key="`card-${n}`"
+                    >
+                        <v-card flat>
+                            <div>
+                                <h2 :class="`headline font-weight-light mb-3 ${experiencesColor}--text`">{{experience.title}} - <span>{{experience.start}}</span></h2>
+                                <ul>
+                                    <li v-for="(duty, j) in experience.duties" :key="j">
+                                        {{duty}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </v-card>
+                    </v-window-item>
+                </v-window>
+
+                <v-card-actions class="justify-space-around">
+                    <v-item-group
+                            v-model="onboarding"
+                            class="text-xs-center"
+                            mandatory
+                    >
+                        <v-item
+                                v-for="(experience, n) in experiencesValue"
+                                :key="`btn-${n}`"
+                        >
+                            <v-btn
+                                    slot-scope="{ active, toggle }"
+                                    :input-value="active"
+                                    round
+                                    @click="toggle"
+                                    color="purple darken-3"
+                                    dark
+                            >
+                                {{experience.start}}
+                            </v-btn>
+                        </v-item>
+                    </v-item-group>
+                </v-card-actions>
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
@@ -34,11 +77,23 @@
     export default {
         data() {
             return {
-                experiencesColor: 'purple'
+                experiencesColor: 'purple',
+                length: 3,
+                onboarding: 0
             }
         },
         methods: {
-            ...mapActions(['getExperiencesAsync'])
+            ...mapActions(['getExperiencesAsync']),
+            next () {
+                this.onboarding = this.onboarding + 1 === this.experiencesValue.length
+                    ? 0
+                    : this.onboarding + 1
+            },
+            prev () {
+                this.onboarding = this.onboarding - 1 < 0
+                    ? this.experiencesValue.length - 1
+                    : this.onboarding - 1
+            }
         },
         computed: {
             ...mapGetters(['experiencesValue'])
