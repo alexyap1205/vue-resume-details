@@ -29,7 +29,7 @@
 </template>
 
 <script>
-    import {mapGetters } from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
 
     export default {
         data() {
@@ -37,8 +37,14 @@
                 experiencesColor: 'purple'
             }
         },
+        methods: {
+            ...mapActions(['getExperiencesAsync'])
+        },
         computed: {
             ...mapGetters(['experiencesValue'])
+        },
+        mounted: function() {
+            this.$store.dispatch('getExperiencesAsync');
         }
     }
 </script>

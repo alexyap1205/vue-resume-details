@@ -40,7 +40,8 @@ const actions = {
         }).catch((error) => {
             console.log(error);
         });
-
+    },
+    getExperiencesAsync(context){
         const experiencesDocRef = db.collection('details/experiences/experiences');
         experiencesDocRef.get().then((coll) => {
 
