@@ -25,6 +25,42 @@
                 </v-timeline>
             </v-flex>
             <v-flex xs12 hidden-md-and-up>
+                <v-card-actions class="justify-space-between">
+                    <v-btn
+                            flat
+                            @click="prev"
+                    >
+                        <v-icon>keyboard_arrow_left</v-icon>
+                    </v-btn>
+                    <v-item-group
+                            v-model="onboarding"
+                            class="text-xs-center"
+                            mandatory
+                    >
+                        <v-item
+                                v-for="(experience, n) in experiencesValue"
+                                :key="`btn-${n}`"
+                        >
+                            <v-btn
+                                    slot-scope="{ active, toggle }"
+                                    :input-value="active"
+                                    icon
+                                    @click="toggle"
+                                    color="white"
+                            >
+                                <v-icon color="purple darken-3">
+                                    brightness_1
+                                </v-icon>
+                            </v-btn>
+                        </v-item>
+                    </v-item-group>
+                    <v-btn
+                            flat
+                            @click="next"
+                    >
+                        <v-icon>keyboard_arrow_right</v-icon>
+                    </v-btn>
+                </v-card-actions>
                 <v-window v-model="onboarding">
                     <v-window-item
                             v-for="(experience, n) in experiencesValue"
@@ -42,30 +78,6 @@
                         </v-card>
                     </v-window-item>
                 </v-window>
-
-                <v-card-actions class="justify-space-around">
-                    <v-item-group
-                            v-model="onboarding"
-                            class="text-xs-center"
-                            mandatory
-                    >
-                        <v-item
-                                v-for="(experience, n) in experiencesValue"
-                                :key="`btn-${n}`"
-                        >
-                            <v-btn
-                                    slot-scope="{ active, toggle }"
-                                    :input-value="active"
-                                    round
-                                    @click="toggle"
-                                    color="purple darken-3"
-                                    dark
-                            >
-                                {{experience.start}}
-                            </v-btn>
-                        </v-item>
-                    </v-item-group>
-                </v-card-actions>
             </v-flex>
         </v-layout>
     </v-container>
